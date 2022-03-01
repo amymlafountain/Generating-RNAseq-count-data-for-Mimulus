@@ -1,0 +1,37 @@
+#!/bin/bash
+#SBATCH --job-name=trimmomatic_PE_distal
+#SBATCH -c 12
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -a 0-3
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=16G
+#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH -o %x_%A_%a.out
+#SBATCH -e %x_%A_%a.err
+
+# the %x_%A_%a is being used here because this is an array.
+
+module load Trimmomatic/0.39
+
+F_reads=(/labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_1/distal_1_1.fq.gz /labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_2/distal_2_1.fq.gz /labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_3/distal_3_1.fq.gz /labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_4/distal_4_1.fq.gz)
+        
+# can add more files, just sperate them by one space]
+
+R_reads=(/labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_1/distal_1_2.fq.gz /labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_2/distal_2_2.fq.gz /labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_3/distal_3_2.fq.gz /labs/Yuan/RNA/202202_STRIPY_RNAseq/raw_data/distal_4/distal_4_2.fq.gz)
+       
+# can add more files, just sperate them by one space, the order of these R files should correspond to the F files above]
+# the number of file pairs you are going to process need to be the same as #SBATCH -a number in the header, for example, if you have 4 pairs, use 0-3; if you have 10 pairs, use 0-9
+
+output=(distal_1 distal_2 distal_3 distal_4)
+# use ${F_reads[$SLURM_ARRAY_TASK_ID]} and ${R_reads[$SLURM_ARRAY_TASK_ID]} in your command to recall reads files, for example:
+
+
+java -jar $Trimmomatic PE -threads 8 -phred33 -validatePairs ${F_reads[$SLURM_ARRAY_TASK_ID]} ${R_reads[$SLURM_ARRAY_TASK_ID]}\
+              ${output[$SLURM_ARRAY_TASK_ID]}_1pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_1un.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2un.trimmed.fastq.gz\
+				LEADING:5\
+			    TRAILING:5\
+			    SLIDINGWINDOW:4:20\
+			    MINLEN:45\

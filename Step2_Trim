@@ -30,8 +30,10 @@ output=(distal_1 distal_2 distal_3 distal_4)
 
 
 java -jar $Trimmomatic PE -threads 8 -phred33 -validatePairs ${F_reads[$SLURM_ARRAY_TASK_ID]} ${R_reads[$SLURM_ARRAY_TASK_ID]}\
-              ${output[$SLURM_ARRAY_TASK_ID]}_1pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_1un.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2un.trimmed.fastq.gz\
-				LEADING:5\
-			    TRAILING:5\
-			    SLIDINGWINDOW:4:20\
-			    MINLEN:45\
+             ${output[$SLURM_ARRAY_TASK_ID]}_1pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_1un.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2un.trimmed.fastq.gz\
+		ILLUMINACLIP:/isg/shared/apps/Trimmomatic/0.36/adapters/TruSeq3-PE-2.fa:2:30:10 \
+               	LEADING:5\
+		TRAILING:5\
+		SLIDINGWINDOW:4:20\
+		MINLEN:45\
+

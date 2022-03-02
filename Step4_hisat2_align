@@ -29,3 +29,4 @@ hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_3_1pair
 
 hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_4_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_4_2pair.trimmed.fastq.gz -S ../alignments/distal_4.sam
 
+#p is the number of processors, dta tells the software to tailor the reports for transcript assemblers, x is the path to the index genome, S is the output sam file

@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --job-name=align
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=20G
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+echo `hostname`
+
+#################################################################
+# Aligning to Genome
+#################################################################
+module load hisat2/2.2.1
+module load samtools/1.10
+
+mkdir -p ../alignments
+
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_1_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_1_2pair.trimmed.fastq.gz -S ../alignments/distal_1.sam
+
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_2_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_2_2pair.trimmed.fastq.gz -S ../alignments/distal_2.sam
+
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_3_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_3_2pair.trimmed.fastq.gz -S ../alignments/distal_3.sam
+
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_4_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_4_2pair.trimmed.fastq.gz -S ../alignments/distal_4.sam
+

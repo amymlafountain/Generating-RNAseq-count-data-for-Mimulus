@@ -3,8 +3,9 @@
 Step 1: Quality check of raw data using FastQC
 
 Step 2: Trim reads using Trimmomatic
-  #so far ~97% of reads per sample saved as properly paired
+  #so far ~90-95% of reads per sample saved as properly paired
   
 Step 3: Quality check of trimmed reads using FastQC
+  #this successfully got rid of most adapters
 
 Step 4: Alignment using HiSat

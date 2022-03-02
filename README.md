@@ -13,3 +13,5 @@
 
 #### Step 4: Alignment using HiSat2
   This creates huge .sam files--need to create a pipe to compress them to .bam files in the same step. Also need to re-run distal samples--failed due to lack of storage.
+  
+### UP NEXT: Sort and Index the bam files

@@ -1,0 +1,42 @@
+#!/bin/bash 
+#SBATCH --job-name=sort_index_bams
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=10G
+#SBATCH --qos=general
+#SBATCH --partition=general
+#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH --mail-type=END
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+module load samtools
+
+#sort them first
+samtools sort -@ 8 ../alignments/proximal_1.bam -o ../alignments/proximal_1_sort.bam
+samtools sort -@ 8 ../alignments/proximal_2.bam -o ../alignments/proximal_2_sort.bam
+samtools sort -@ 8 ../alignments/proximal_3.bam -o ../alignments/proximal_3_sort.bam
+samtools sort -@ 8 ../alignments/proximal_4.bam -o ../alignments/proximal_4_sort.bam
+samtools sort -@ 8 ../alignments/stripe_1.bam -o ../alignments/stripe_1_sort.bam
+samtools sort -@ 8 ../alignments/stripe_2.bam -o ../alignments/stripe_2_sort.bam
+samtools sort -@ 8 ../alignments/stripe_3.bam -o ../alignments/stripe_3_sort.bam
+samtools sort -@ 8 ../alignments/stripe_4.bam -o ../alignments/stripe_4_sort.bam
+samtools sort -@ 8 ../alignments/distal_1.bam -o ../alignments/distal_1_sort.bam
+samtools sort -@ 8 ../alignments/distal_2.bam -o ../alignments/distal_2_sort.bam
+samtools sort -@ 8 ../alignments/distal_3.bam -o ../alignments/distal_3_sort.bam
+samtools sort -@ 8 ../alignments/distal_4.bam -o ../alignments/distal_4_sort.bam
+
+#and then create the indexes
+samtools index ../alignments/proximal_1_sort.bam ../alignments/proximal_1.bai
+samtools index ../alignments/proximal_2_sort.bam ../alignments/proximal_2.bai
+samtools index ../alignments/proximal_3_sort.bam ../alignments/proximal_3.bai
+samtools index ../alignments/proximal_4_sort.bam ../alignments/proximal_4.bai
+samtools index ../alignments/stripe_1_sort.bam ../alignments/stripe_1.bai
+samtools index ../alignments/stripe_2_sort.bam ../alignments/stripe_2.bai
+samtools index ../alignments/stripe_3_sort.bam ../alignments/stripe_3.bai
+samtools index ../alignments/stripe_4_sort.bam ../alignments/stripe_4.bai
+samtools index ../alignments/distal_1_sort.bam ../alignments/distal_1.bai
+samtools index ../alignments/distal_2_sort.bam ../alignments/distal_2.bai
+samtools index ../alignments/distal_3_sort.bam ../alignments/distal_3.bai
+samtools index ../alignments/distal_4_sort.bam ../alignments/distal_4.bai

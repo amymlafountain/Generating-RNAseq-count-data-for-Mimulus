@@ -1,5 +1,5 @@
 ##  RNAseq analysis of MvBL leaves
-This repository applies to RNAseq performed on leaves from the MvBL line. Sequencing was performed at Novogene in February 2022. 
+This repository applies to RNAseq performed on leaves from the MvBL line. Samples include 4 biological replicates per sample collected from at least three different plants. MvBL sections were prepared from 6 leaves 8-20mm in length; whole leaves included one pair of leaves selected from below a XXX flower bud. Sequencing was performed at Novogene in February 2022. 
 
 #### Step 1: Quality check of raw data using FastQC
 

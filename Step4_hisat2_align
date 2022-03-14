@@ -13,20 +13,31 @@
 
 echo `hostname`
 
-#################################################################
-# Aligning to Genome
-#################################################################
+##################################################################################
+# Aligning to Genome with HiSat2, followed by sorting, compression and indexing
+##################################################################################
 module load hisat2/2.2.1
 module load samtools/1.10
 
-mkdir -p ../alignments
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/HY5A_1_1pair.trimmed.fastq.gz -2 ../results/trimming/HY5A_1_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T HY5A_1 - >HY5A_1.bam
 
-hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_1_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_1_2pair.trimmed.fastq.gz -S ../alignments/distal_1.sam
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/HY5A_2_1pair.trimmed.fastq.gz -2 ../results/trimming/HY5A_2_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T HY5A_2 - >HY5A_2.bam
 
-hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_2_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_2_2pair.trimmed.fastq.gz -S ../alignments/distal_2.sam
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/HY5A_3_1pair.trimmed.fastq.gz -2 ../results/trimming/HY5A_3_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T HY5A_3 - >HY5A_3.bam
 
-hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_3_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_3_2pair.trimmed.fastq.gz -S ../alignments/distal_3.sam
+hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/HY5A_4_1pair.trimmed.fastq.gz -2 ../results/trimming/HY5A_4_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T HY5A_4 - >HY5A_4.bam
 
-hisat2 -p 8 --dta -x ../hisat2_genome/MVBL -1 ../results/trimming/distal_4_1pair.trimmed.fastq.gz -2 ../results/trimming/distal_4_2pair.trimmed.fastq.gz -S ../alignments/distal_4.sam
 
-#p is the number of processors, dta tells the software to tailor the reports for transcript assemblers, x is the path to the index genome, S is the output sam file
+# index bam files
+samtools index HY5A_1.bam HY5A_1.bai
+samtools index HY5A_2.bam HY5A_2.bai
+samtools index HY5A_3.bam HY5A_3.bai
+samtools index HY5A_4.bam HY5A_4.bai

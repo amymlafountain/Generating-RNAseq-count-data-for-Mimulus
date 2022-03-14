@@ -13,8 +13,6 @@ This repository applies to RNAseq performed on leaves from the MvBL line. Sample
   This shows that trimming successfully got rid of most adapters. I only checked the reads that were marked as properly paired.
 
 #### Step 4: Alignment using HiSat2
-  This creates huge .sam files--need to create a pipe to compress them to .bam files in the same step. 
+  This script includes sorting, compression and indexing of bam files.
   
-#### Step 5: Compress the bam files
-
-#### Step 6: Sort and index the bam files
+#### Step 5: Counts

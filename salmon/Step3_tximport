@@ -1,0 +1,14 @@
+#Note that from here out, things are happening in R! This information is taken from the tximport vignette
+
+library(tximportData)
+
+dir <- path/to/directory
+list.files(dir)
+
+#create a named vector to point to the quantification files. We will create a vector of filenames first by reading in a table that contains the sample IDs, and then combining this with dir and "quant.sf.gz"
+samples <- read.table(file.path(dir, "samples.txt"), header = TRUE)
+samples
+
+#we need to construct a data frame called "tx2gene" that includes two columns, the transcript ID and the gene ID. I think that we can do this from the GFF file:
+
+#check out this tutorial for more information: https://www.hadriengourle.com/tutorials/rna/

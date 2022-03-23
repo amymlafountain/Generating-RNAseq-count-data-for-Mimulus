@@ -14,8 +14,9 @@ This repository applies to RNAseq performed on leaves from the MvBL line. Sample
 
 #### Step 4: Alignment and counts
  From this point on, multiple different pipelines can be followed. 
-    1. Hisat2: This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq.
+    
+##### 1. Hisat2: This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq.
 
-    2. Salmon/tximport
+##### 2. Salmon/tximport
   
 

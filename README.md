@@ -12,7 +12,10 @@ This repository applies to RNAseq performed on leaves from the MvBL line. Sample
 #### Step 3: Quality check of trimmed reads using FastQC
   This shows that trimming successfully got rid of most adapters. I only checked the reads that were marked as properly paired.
 
-#### Step 4: Alignment using HiSat2
-  This script includes sorting, compression and indexing of bam files.
+#### Step 4: Alignment and counts
+ From this point on, multiple different pipelines can be followed. 
+    1. Hisat2: This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq.
+
+    2. Salmon/tximport
   
-#### Step 5: Counts
+

@@ -1,17 +1,13 @@
 #!/bin/bash
 #add the slurm header! make sure number of threads is 8. 
 
-
-
-for fn in data/DRR0161{25..40};
+for i in *pair.trimmed.fastq.gz
 do
-samp=`basename ${fn}`
-echo "Processing sample ${samp}"
-salmon quant -i athal_index -l A \
-         -1 ${fn}/${samp}_1.fastq.gz \
-         -2 ${fn}/${samp}_2.fastq.gz \
-         -p 8 --validateMappings -o quants/${samp}_quant
-done 
+   prefix=$(basename $i for *pair.trimmed.fastq.gz)
+   salmon quant -i ../salmon_index/MvBLg_v2.0_index/ --libType A \
+          -1 ${prefix}_1pair.trimmed.fastq.gz -2 ${prefix}_2pair.trimmed -o quant/${prefix};
+done
+
 
 #-i tells salmon where to find the index; -l A tells salmon to automatically determine the library type; -p 8 tells salmon to use 8 threads; -o specifies the output directory
 #these are the base options for salmon-there are many more options available in the salmon documentation

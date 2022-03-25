@@ -7,7 +7,7 @@ This repository applies to RNAseq performed on leaves from the MvBL line. Sample
   
   These are paired end reads, so it's critical to trim them together or else you may end up with an uneven number of reads and the alignment will fail.
  
- So far ~90-95% of reads per sample saved as properly paired
+Note--we will probably want to submit both the raw and processed reads to a repository.
   
 #### Step 3: Quality check of trimmed reads using FastQC
   This shows that trimming successfully got rid of most adapters. I only checked the reads that were marked as properly paired.

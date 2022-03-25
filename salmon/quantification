@@ -1,13 +1,27 @@
 #!/bin/bash
-#add the slurm header! make sure number of threads is 8. 
+#SBATCH --job-name=salmon
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=20G
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
 
-for i in *pair.trimmed.fastq.gz
+module load salmon
+
+for fn in ../results/trimming/MvBL
 do
-   prefix=$(basename $i for *pair.trimmed.fastq.gz)
-   salmon quant -i ../salmon_index/MvBLg_v2.0_index/ --libType A \
-          -1 ${prefix}_1pair.trimmed.fastq.gz -2 ${prefix}_2pair.trimmed -o quant/${prefix};
-done
-
+samp=`basename ${fn}`
+echo "Processing sample ${samp}"
+salmon quant -i ../salmon_index/MvBLg_v2.0_index/ -l A \
+         -1 ${fn}/${samp}_4_1pair.trimmed.fastq.gz \
+         -2 ${fn}/${samp}_4_2pair.trimmed.fastq.gz \
+         -p 8 --validateMappings -o quants/${samp}_quant
+done 
 
 #-i tells salmon where to find the index; -l A tells salmon to automatically determine the library type; -p 8 tells salmon to use 8 threads; -o specifies the output directory
 #these are the base options for salmon-there are many more options available in the salmon documentation

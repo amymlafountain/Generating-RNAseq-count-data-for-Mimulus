@@ -1,9 +1,12 @@
 #Note that from here out, things are happening in R! This information is taken from the tximport vignette
 
-library(tximportData)
+#first we need to create an object that binds the transcript names to the gene names. In our case the GTF and GFF3 files don't have gene names, but here we go:
 
-dir <- path/to/directory
-list.files(dir)
+TxDb <- makeTxDbFromGFF(file = "C:/Users/Amy/Desktop/MvBLg_v2.0.gff3")
+k <- keys(TxDb, keytype = "TXNAME")
+tx2gene <- AnnotationDbi::select(TxDb, k, "GENEID", "TXNAME")
+head(tx2gene)
+
 
 #create a named vector to point to the quantification files. We will create a vector of filenames first by reading in a table that contains the sample IDs, and then combining this with dir and "quant.sf.gz"
 samples <- read.table(file.path(dir, "samples.txt"), header = TRUE)

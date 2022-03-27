@@ -36,7 +36,7 @@ do
     salmon quant -i ../salmon_index/MvBLg_v2.0_index/ -l A \
             -1 "${strarr[0]}_${strarr[1]}_1pair.trimmed.fastq.gz" \
             -2 "${strarr[0]}_${strarr[1]}_2pair.trimmed.fastq.gz" \
-            -p 8 --validateMappings -o quants/${samp}_quant
+            -p 8 --validateMappings -o quants/${strarr[0]}_${strarr[1]}_quant
 done 
 
 #-i tells salmon where to find the index; -l A tells salmon to automatically determine the library type; -p 8 tells salmon to use 8 threads; -o specifies the output directory

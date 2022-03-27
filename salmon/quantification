@@ -11,16 +11,32 @@
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
 
+# TODO: uncomment me for running on server
 module load salmon
 
-for fn in ../results/trimming/MvBL
+for fn in ../results/trimming/*_*_*.fastq.gz
 do
-samp=`basename ${fn}`
-echo "Processing sample ${samp}"
-salmon quant -i ../salmon_index/MvBLg_v2.0_index/ -l A \
-         -1 ${fn}/${samp}_4_1pair.trimmed.fastq.gz \
-         -2 ${fn}/${samp}_4_2pair.trimmed.fastq.gz \
-         -p 8 --validateMappings -o quants/${samp}_quant
+    echo Processing: $fn
+
+    readarray -d _ -t strarr <<< "$fn"
+    # THIS IS JUST SHOWING HOW TO ACCESS PIECES OF THE ARRAY
+    #echo "${strarr[0]}"
+    #echo "${strarr[1]}"
+    #echo "${strarr[2]}"
+    printf "\n"
+
+    # THIS SHOULD CONTROL WHETHER YOU AVOID PROCESSING FILE 2
+    if [[ ! ${strarr[2]::1} -eq 1 ]]
+    then
+        echo "It's not the first file: ${fn} "
+        continue
+    fi
+
+    # TODO: uncomment me for running on server
+    salmon quant -i ../salmon_index/MvBLg_v2.0_index/ -l A \
+            -1 "${strarr[0]}_${strarr[1]}_1pair.trimmed.fastq.gz" \
+            -2 "${strarr[0]}_${strarr[1]}_2pair.trimmed.fastq.gz" \
+            -p 8 --validateMappings -o quants/${samp}_quant
 done 
 
 #-i tells salmon where to find the index; -l A tells salmon to automatically determine the library type; -p 8 tells salmon to use 8 threads; -o specifies the output directory

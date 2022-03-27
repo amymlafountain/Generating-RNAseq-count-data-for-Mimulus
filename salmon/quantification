@@ -18,7 +18,7 @@ for fn in ../results/trimming/*_*_*.fastq.gz
 do
     echo Processing: $fn
 
-    readarray -d _ -t strarr <<< "$fn"
+    IFS="_" read -a strarr <<< $fn
     # THIS IS JUST SHOWING HOW TO ACCESS PIECES OF THE ARRAY
     #echo "${strarr[0]}"
     #echo "${strarr[1]}"

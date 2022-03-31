@@ -1,6 +1,47 @@
-#Note that from here out, things are happening in R! This information is taken from the tximport vignette
+#first we need to create an object that binds the transcript names to the gene names. For some reason, the gene_ID is not being pulled in even though it is present in the gtf file
+library(readr)
+library(tximport)
+library(GenomicFeatures)
+library(rtracklayer)
+library(biomaRt)
+library(dplyr)
 
-#first we need to create an object that binds the transcript names to the gene names. In our case the GTF and GFF3 files don't have gene names, but here we go:
+#first we need to convert the gtf to a dataframe on import:
+library(biomaRt)
+GTF_files <- system.file("extdata", "GTF_files", package="GenomicFeatures")
+path <- file.path(GTF_files, "MvBLg_v2.0.gtf")
+gtf <- rtracklayer::import(path)
+gtf_df=as.data.frame(gtf)
+View(gtf_df)
+
+#Genomic features will not accept NA values in the transcript ID or gene ID columns, so next we need to subset the data using dplyr:
+CDS_df <- subset(gtf_df, type == "CDS")
+exon_df <- subset(gtf_df, type == "exon")
+gene_df <- subset(gtf_df, type == "gene")
+transcript_df <- subset(gtf_df, type == "transcript")
+
+#now we have a data frame with no NA values in either column. 
+
+#next we need to build the txdb object manually using makeTxDb(). Note that this is somewhat rare, but it's the only way I could get around the issue with the NA values.
+
+
+transcripts <- data.frame(
+    tx_id=transcript_df$transcript_id,
+    tx_chrom=transcript_df$seqnames,
+    tx_strand= transcript_df$strand,
+    tx_start=transcript_df$start,
+    tx_end=transcript_df$end)
+splicings <-  data.frame(
+    tx_id=exon_df$transcript_id,
+    exon_rank=exon_df$start,
+    exon_start=exon_df$start,
+    exon_end=exon_df$end)
+
+txdb <- makeTxDb(transcripts, splicings)
+
+
+
+
 
 TxDb <- makeTxDbFromGFF(file = "C:/Users/Amy/Desktop/MvBLg_v2.0.gff3")
 k <- keys(TxDb, keytype = "TXNAME")

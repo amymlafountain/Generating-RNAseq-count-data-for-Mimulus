@@ -48,12 +48,23 @@ head(tx2gene)
 
 #Next I followed this tutorial https://hbctraining.github.io/DGE_workshop_salmon/lessons/01_DGE_setup_and_overview.html to connect to my files
 
-#first we need to specify the file path and gather the names of the files into a vector:
+#first we need to specify the file path and gather the names of the files into a vector (make sure that the working directory has been set first!:
 samples <- list.files(path = "./", full.names = T, pattern="*_quant")
 files <- file.path(samples, "quant.sf")
 
 names(files) <- str_replace(samples, "./", "") %>% 
-     str_replace("._quant", "")
+     str_replace("_quant", "")
      
 txi <- tximport(files, type="salmon", tx2gene=tx2gene[,c("transcript_id", "gene_id")], countsFromAbundance="lengthScaledTPM")
 
+#prepare metadata:
+sampletype <- factor(c(rep("distal",4), rep("HY5A", 4), rep("MV103", 4), rep("MvBL", 4), rep("OBOA", 4), rep("OBOB", 4), rep("proximal", 4), rep("stripe", 4), rep("TCP5", 4)))
+
+meta <- data.frame(sampletype, row.names = colnames(txi$counts))
+View(meta)
+library(ggplot2)
+ggplot(data) +
+     geom_histogram(aes(x = distal_1), stat = "bin", bins = 200) +
+     xlab("Raw expression counts") +
+     ylab("Number of genes")
+>View(data)

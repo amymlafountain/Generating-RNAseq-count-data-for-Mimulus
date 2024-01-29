@@ -1,5 +1,5 @@
-##  RNAseq analysis of MvBL leaves
-This repository applies to RNAseq performed on leaves from the MvBL line. Samples include 4 biological replicates per sample collected from at least three different plants. MvBL sections were prepared from 6 leaves 8-20mm in length; each whole leaf sample included one leaf 20-25 mm in length, selected from below a 5mm flower bud from young plants. RNA was prepared using the Spectrum Total Plant Kit. Paired-end sequencing was performed at Novogene in February 2022. 
+##  RNAseq analysis of various Mimulus samples
+These scripts were prepared for use on the University of Connecticut Xanadu cluster
 
 ### Trimming and quality control
 #### Step 1: Quality check of raw data using FastQC
@@ -11,13 +11,15 @@ These are paired end reads, so it's critical to trim them together or else you m
 #### Step 3: Quality check of trimmed reads using FastQC
 Here we are checking that trimming successfully got rid of most adapters. I only checked the reads that were marked as properly paired.
 
-#### Step 4: Alignment and counts
-From this point on, multiple different pipelines can be followed. 
-
 ### Analysis pipelines
 #### Pipeline 1. Hisat2/HTseq
 This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq. I have also included the protocol for generating TPM values.
 
+###### Step 1: Indexing the genome
+###### Step 2: Trimming the raw reads
+###### Step 3: Hisat2
+###### Step 4: Generating counts with HTseq
+  
 #### Pipeline 2. Salmon/tximport
 This folder contains the script for running Salmon to rapidly estimate transcript abundance.
 

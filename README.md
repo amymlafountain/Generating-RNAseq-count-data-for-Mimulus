@@ -6,20 +6,20 @@ This repository applies to RNAseq performed on leaves from the MvBL line. Sample
 
 #### Step 2: Trim reads using Trimmomatic
   
-  These are paired end reads, so it's critical to trim them together or else you may end up with an uneven number of reads and the alignment will fail.
- 
-Note--we will probably want to submit both the raw and processed reads to a repository.
+These are paired end reads, so it's critical to trim them together or else you may end up with an uneven number of reads and the alignment will fail.
   
 #### Step 3: Quality check of trimmed reads using FastQC
-  This shows that trimming successfully got rid of most adapters. I only checked the reads that were marked as properly paired.
+Here we are checking that trimming successfully got rid of most adapters. I only checked the reads that were marked as properly paired.
 
 #### Step 4: Alignment and counts
- From this point on, multiple different pipelines can be followed. 
+From this point on, multiple different pipelines can be followed. 
 
 ### Analysis pipelines
-##### Pipeline 1. Hisat2/HTseq: This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq.
+#### Pipeline 1. Hisat2/HTseq
+This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq. I have also included the protocol for generating TPM values.
 
-##### Pipeline 2. Salmon/tximport
+#### Pipeline 2. Salmon/tximport
+This folder contains the script for running Salmon to rapidly estimate transcript abundance.
 
 
   

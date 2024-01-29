@@ -1,0 +1,42 @@
+#!/bin/bash
+#SBATCH --job-name=trimmomatic_PE_distal
+#SBATCH -c 12
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -a 0-7
+#SBATCH --partition=general
+#SBATCH --qos=general
+#SBATCH --mail-type=END
+#SBATCH --mem=16G
+#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH -o %x_%A_%a.out
+#SBATCH -e %x_%A_%a.err
+
+# the -a flag reflects the number of samples in your array and needs to be adjusted each time--the first sample is 0, second sample is 1, and so on.
+# the %x_%A_%a is being used here because this is an array.
+
+module load Trimmomatic/0.39
+INDIR=/labs/Yuan/RNA/202402_Mp_Ml_tissues
+
+F_reads=($INDIR/Ml_cal1/Ml_cal1_1.fq.gz $INDIR/Ml_cor2/Ml_cor2_1.fq.gz $INDIR/Ml_pis3/Ml_pis3_1.fq.gz $INDIR/Ml_sta4/Ml_sta4_1.fq.gz $INDIR/Mp_cal5/Mp_cal5_1.fq.gz $INDIR/Mp_cor6/Mp_cor6_1.fq.gz $INDIR/Mp_pis7/Mp_pis7_1.fq.gz $INDIR/Mp_sta8/Mp_sta8_1.fq.gz)
+        
+# can add more files, just seperate them by one space]
+
+R_reads=($INDIR/Ml_cal1/Ml_cal1_2.fq.gz $INDIR/Ml_cor2/Ml_cor2_2.fq.gz $INDIR/Ml_pis3/Ml_pis3_2.fq.gz $INDIR/Ml_sta4/Ml_sta4_2.fq.gz $INDIR/Mp_cal5/Mp_cal5_2.fq.gz $INDIR/Mp_cor6/Mp_cor6_2.fq.gz $INDIR/Mp_pis7/Mp_pis7_2.fq.gz $INDIR/Mp_sta8/Mp_sta8_2.fq.gz)
+       
+# can add more files, just sperate them by one space, the order of these R files should correspond to the F files above]
+# the number of file pairs you are going to process need to be the same as #SBATCH -a number in the header, for example, if you have 4 pairs, use 0-3; if you have 10 pairs, use 0-9
+
+output=(Ml_cal1 Ml_cor2 Ml_pis3 Ml_sta4 Mp_cal5 Mp_cor6 Mp_pis7 Mp_sta8)
+# use ${F_reads[$SLURM_ARRAY_TASK_ID]} and ${R_reads[$SLURM_ARRAY_TASK_ID]} in your command to recall reads files, for example:
+
+mkdir /home/FCAM/alafountain/RNAseq/202402_results/trimmomatic
+cd /home/FCAM/alafountain/RNAseq/202402_results/trimmomatic
+
+java -jar $Trimmomatic PE -threads 8 -phred33 -validatePairs ${F_reads[$SLURM_ARRAY_TASK_ID]} ${R_reads[$SLURM_ARRAY_TASK_ID]}\
+             ${output[$SLURM_ARRAY_TASK_ID]}_1pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_1un.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2pair.trimmed.fastq.gz ${output[$SLURM_ARRAY_TASK_ID]}_2un.trimmed.fastq.gz\
+		ILLUMINACLIP:/isg/shared/apps/Trimmomatic/0.36/adapters/TruSeq3-PE-2.fa:2:30:10 \
+               	LEADING:5\
+		TRAILING:5\
+		SLIDINGWINDOW:4:20\
+		MINLEN:45\

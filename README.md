@@ -1,5 +1,5 @@
-##  RNAseq analysis of various Mimulus samples
-These scripts were prepared for the analysis of paired-end reads, and for use on the University of Connecticut Xanadu cluster. 
+##  This directory contains scripts for generating RNAseq counts for various Mimulus samples
+These shell scripts were prepared for the analysis of paired-end reads, and for use on the University of Connecticut Xanadu cluster. 
 
 ### Trimming and quality control
 Regardless of which pipeline is used, raw reads should first undergo trimming and quality control, as follows:

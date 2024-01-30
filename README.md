@@ -25,9 +25,9 @@ This directory contains the scripts for sorting, compression and indexing of bam
 #### Pipeline 2. Salmon/tximport
 This folder contains the script for running Salmon to rapidly estimate transcript abundance. The shell scripts are adapted from scripts prepared by Dr. Qiaoshan Lin.
 
-##### Step 1: Indexing the genome for Salmon
-##### Step 2: Generating counts using Salmon
-##### Step 3: Importing the data into R using tximport
+###### Step 1: Indexing the genome for Salmon
+###### Step 2: Generating counts using Salmon
+###### Step 3: Importing the data into R using tximport
 
 
   

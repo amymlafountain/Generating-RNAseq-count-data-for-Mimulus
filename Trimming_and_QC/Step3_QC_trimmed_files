@@ -6,7 +6,7 @@
 #SBATCH --mem=32G
 #SBATCH --qos=general
 #SBATCH --partition=general
-#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH --mail-user=firstname.lastname@uconn.edu
 #SBATCH --mail-type=END
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
@@ -19,10 +19,10 @@ date
 module load fastqc
 
 # create output directory
-OUTDIR=/home/FCAM/alafountain/RNAseq/results/trimmed_fastqc
+OUTDIR=/path/to/where/files/should/go
 mkdir -p $OUTDIR
 
 # run fastqc. "*fq" tells it to run on all fastq files in directory
-find /home/FCAM/alafountain/RNAseq/results/trimming -name '*pair.trimmed.fastq.gz' -exec fastqc -t 6 -o $OUTDIR {} \;
+find /path/to/trimmed/files -name '*pair.trimmed.fastq.gz' -exec fastqc -t 6 -o $OUTDIR {} \;
 
 date

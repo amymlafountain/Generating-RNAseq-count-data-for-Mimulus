@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=Mpar_hisat_align
+#SBATCH --job-name=hisat_alignment
 #SBATCH -n 1
 #SBATCH -N 1
 #SBATCH -c 8
@@ -7,7 +7,7 @@
 #SBATCH --partition=xeon
 #SBATCH --qos=general
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH --mail-user=firstname.lastname@uconn.edu
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
 
@@ -20,8 +20,8 @@ module load hisat2/2.2.1
 module load samtools/1.10
 
 INDEX=../genome/Mpar_hisat2_index/Mpar
-INDIR=../RNAseq/202402_tissues_results/trimmomatic
-OUTDIR=../RNAseq/202402_tissues_results/Mpar_hisat2_alignments
+INDIR=../path/to/trimmed/reads
+OUTDIR=../path/to/hisat2_alignments
 mkdir -p $OUTDIR
 
 hisat2 -p 8 --dta -x $INDEX -1 $INDIR/Mp_cal5_1pair.trimmed.fastq.gz -2 $INDIR/Mp_cal5_2pair.trimmed.fastq.gz | \

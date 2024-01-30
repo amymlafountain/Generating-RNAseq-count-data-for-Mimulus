@@ -15,14 +15,14 @@ We are examining paired end reads, so it's critical to trim them together or els
 Here we are checking that the adapters have successfully been removed. I only checked the reads that were marked as properly paired.
 
 ### Generating counts
-#### Pipeline 1. Hisat2/HTseq
+#### Counts Pipeline 1. Hisat2/HTseq
 This directory contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq. The scripts used in this pipeline are adapted from a tutorial on reference-based RNAseq prepared by the University of Connecticut Computational Biology Core.
 
 ###### Step 1: Indexing the genome for Hisat2
 ###### Step 2: Alignment of reads to the genome using Hisat2
 ###### Step 3: Generating counts with HTseq
   
-#### Pipeline 2. Salmon/tximport
+#### Counts Pipeline 2. Salmon/tximport
 This folder contains the script for running Salmon to rapidly estimate transcript abundance. The shell scripts are adapted from scripts prepared by Dr. Qiaoshan Lin.
 
 ###### Step 1: Indexing the genome for Salmon

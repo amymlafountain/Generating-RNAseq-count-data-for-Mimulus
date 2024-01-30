@@ -1,5 +1,5 @@
 ##  RNAseq analysis of various Mimulus samples
-These scripts were prepared for use on the University of Connecticut Xanadu cluster
+These scripts were prepared for use on the University of Connecticut Xanadu cluster. 
 
 ### Trimming and quality control
 #### Step 1: Quality check of raw data using FastQC
@@ -13,7 +13,7 @@ Here we are checking that trimming successfully got rid of most adapters. I only
 
 ### Analysis pipelines
 #### Pipeline 1. Hisat2/HTseq
-This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq. I have also included the protocol for generating TPM values.
+This folder contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq. The scripts used in this pipeline are adapted from a tutorial on reference-based RNAseq prepared by the University of Connecticut Computational Biology Core.
 
 ###### Step 1: Indexing the genome
 ###### Step 2: Trimming the raw reads

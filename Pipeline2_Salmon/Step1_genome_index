@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=hisat2_index
+#SBATCH --job-name=salmon_index
 #SBATCH -n 1
 #SBATCH -N 1
 #SBATCH -c 16
@@ -7,10 +7,11 @@
 #SBATCH --partition=general
 #SBATCH --qos=general
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH --mail-user=firstname.lastname@uconn.edu
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
 
+#To directly retrieve the genome from Mimubase
 wget http://mimubase.org/FTP/Genomes/MvBLg_v2.0/MvBLg_v2.0.codingseq.fa
 
 module load salmon

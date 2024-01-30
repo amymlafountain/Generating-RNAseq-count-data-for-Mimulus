@@ -7,11 +7,10 @@
 #SBATCH --partition=general
 #SBATCH --qos=general
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=amy.lafountain@uconn.edu
+#SBATCH --mail-user=firstname.lastname@uconn.edu
 #SBATCH -o %x_%j.out
 #SBATCH -e %x_%j.err
 
-# TODO: uncomment me for running on server
 module load salmon
 
 for fn in ../results/trimming/*_*_*.fastq.gz

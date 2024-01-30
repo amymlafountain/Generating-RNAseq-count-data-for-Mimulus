@@ -1,0 +1,50 @@
+#!/bin/bash
+#SBATCH --job-name=hisat_alignment
+#SBATCH -n 1
+#SBATCH -N 1
+#SBATCH -c 8
+#SBATCH --mem=20G
+#SBATCH --partition=xeon
+#SBATCH --qos=general
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=firstname.lastname@uconn.edu
+#SBATCH -o %x_%j.out
+#SBATCH -e %x_%j.err
+
+echo `hostname`
+
+# Aligning trimmed reads to Genome with HiSat2, followed by sorting, compression and indexing
+
+module load hisat2/2.2.1
+module load samtools/1.10
+
+INDEX=../path/to/hisat2_index/
+INDIR=../path/to/trimmed_reads/
+OUTDIR=../path/to/hisat2_alignments
+mkdir -p $OUTDIR
+
+hisat2 -p 8 --dta -x $INDEX -1 $INDIR/SampleA_1pair.trimmed.fastq.gz -2 $INDIR/SampleA_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T SampleA - >$OUTDIR/SampleA.bam
+
+hisat2 -p 8 --dta -x $INDEX -1 $INDIR/SampleB_1pair.trimmed.fastq.gz -2 $INDIR/SampleB_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T SampleB - >$OUTDIR/SampleB.bam
+
+hisat2 -p 8 --dta -x $INDEX -1 $INDIR/SampleC_1pair.trimmed.fastq.gz -2 $INDIR/SampleC_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T SampleC - >$OUTDIR/SampleC.bam
+
+hisat2 -p 8 --dta -x $INDEX -1 $INDIR/SampleD_1pair.trimmed.fastq.gz -2 $INDIR/SampleD_2pair.trimmed.fastq.gz | \
+	samtools view -@ 8 -S -h -u - | \
+	samtools sort -@ 8 -T SampleD - >$OUTDIR/SampleD.bam
+
+#samtools view is telling the samtools program to convert the SAM file (that was produced by hisat) into the compressed BAM format
+#the flags are as follows: -S indicates that the input file is in SAM format, -h indicates that the header of the input file should be written into the output, -u indicates that the BAM file should be written in uncompressed format 
+#samtools sort is telling the samtools program to sort and compress the bam files. the -T flag is telling the program to create a temporary file that will be deleted upon completion.
+
+# lastly we need to index bam files
+samtools index $OUTDIR/SampleA.bam 
+samtools index $OUTDIR/SampleB.bam 
+samtools index $OUTDIR/SampleC.bam 
+samtools index $OUTDIR/SampleD.bam

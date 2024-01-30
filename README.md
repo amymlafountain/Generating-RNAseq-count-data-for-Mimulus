@@ -14,7 +14,7 @@ We are examining paired end reads, so it's critical to trim them together or els
 #### Step 3: Quality check of trimmed reads using FastQC
 Here we are checking that the adapters have successfully been removed. I only checked the reads that were marked as properly paired.
 
-### Analysis pipelines
+### Generating counts
 #### Pipeline 1. Hisat2/HTseq
 This directory contains the scripts for sorting, compression and indexing of bam files from Hisat2, with simple counting by htseq. The scripts used in this pipeline are adapted from a tutorial on reference-based RNAseq prepared by the University of Connecticut Computational Biology Core.
 
@@ -27,6 +27,16 @@ This folder contains the script for running Salmon to rapidly estimate transcrip
 
 ###### Step 1: Indexing the genome for Salmon
 ###### Step 2: Generating counts using Salmon
+
+### RNAseq analyses
+The following analyses are conducted locally. The .counts files can be transferred from the Xanadu cluster to a local computer using Globus.
+
+#### Generating TPM (transcripts per million) values
+##### Step 1: Calculating gene lengths
+##### Step 2: Generate TPM values using TBtools
+
+#### Differential expression analysis using DESeq2 (R)
+##### These scripts are coming soon!
 
 
 

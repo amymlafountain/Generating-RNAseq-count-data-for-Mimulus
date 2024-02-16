@@ -3,7 +3,7 @@
 #SBATCH -n 1
 #SBATCH -N 1
 #SBATCH -c 4
-#SBATCH --mem=10G
+#SBATCH --mem=3G
 #SBATCH --partition=general
 #SBATCH --qos=general
 #SBATCH --mail-type=ALL
@@ -25,4 +25,4 @@ mkdir -p $OUTDIR
 
 GENOME=../genome/Mparg_v2.0.fa
 
-hisat2-build -p 16 $GENOME $OUTDIR/Mpar
+hisat2-build -p 4 $GENOME $OUTDIR/Mpar

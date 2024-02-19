@@ -7,7 +7,7 @@
 #SBATCH --partition=general
 #SBATCH --qos=general
 #SBATCH --mail-type=END
-#SBATCH --mem=16G
+#SBATCH --mem=5G
 #SBATCH --mail-user=firstname.lastname@uconn.edu
 #SBATCH -o %x_%A_%a.out
 #SBATCH -e %x_%A_%a.err
